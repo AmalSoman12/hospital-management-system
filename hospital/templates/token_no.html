@@ -1,0 +1,27 @@
+
+{% extends "master.html" %}
+{% load static %}
+{% block title %} Token No {% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+<section class="tokens text-center mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 p-5 mt-5 mb-5">
+                {% if token %}
+                    <i class="icofont-check-circled text-lg text-color-2" style="font-size:300%; color:red;"></i>
+                    <h1>Thank you for your appointment</h1>
+                    <span>Your token Number is <strong>{{ token.token_number }}</strong></span><br>
+                    <span>Doctor: <strong>{{ token.doctor.name }}</strong></span><br>
+                    <span>Department: <strong>{{ token.department.name }}</strong></span><br>
+                    <span>Date: <strong>{{ token.date }}</strong></span>
+                {% else %}
+                    <h1>Sorry, No appointment found</h1>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include "footer.html" %}
+{% endblock %}

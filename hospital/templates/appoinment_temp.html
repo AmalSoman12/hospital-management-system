@@ -1,0 +1,96 @@
+{% extends "master.html" %}
+{% load static %}  
+{% block title %}
+Appoinment
+{% endblock %}
+{% block content %}
+<section class="mt-5 bg-white pt-5  appoinment pb-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mt-5 pm-4">
+          <img src="static/images/img-3.jpg" class="img-fluid">
+        </div>
+        <div class="col-lg-6 col-md-10">
+          <h1 class="mb-4">Book Appointment</h1>
+          <span class="">Mollitia dicta commodi est recusandae iste, natus eum asperiores corrupti qui velit . Iste dolorum atque
+            similique praesentium soluta.</span>
+            <form action="{% url 'appoinment' %}" method="POST"  class="form-manage mt-5">
+                {% csrf_token %}
+            <div class="row">
+              
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <select class="form-control" id="department" name="department" required>
+                    <option selected disabled>Choose Department</option>
+                    {% for dep in departments %}
+                    <option value="{{ dep.id }}">{{ dep.name }}</option>
+                    {% endfor %}
+                </select>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <select class="form-control" id="doctor" name="doctor" required>
+                    <option selected disabled>Select Doctor</option>
+                </select>                
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <input name="date" id="date" type="date" class="form-control" placeholder="dd/mm/yyyy" required>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <input name="phone" id="phone" type="phone" class="form-control" placeholder="Phone Number" required>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <input name="fname" id="fname" type="text" class="form-control" placeholder="First name" required>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <input name="lname" id="lname" type="text" class="form-control" placeholder="Last Name" required>
+                </div>
+              </div>
+              
+              <div class="form-group-2 mb-4">
+              <textarea name="message" id="message" class="form-control" rows="6" placeholder="Your Message" required></textarea>
+              </div>
+              <div class="col-6">
+                <button class="btn btn-danger rounded-pill btn-md text-uppercase"  type="submit" >Make Appoinment <i class="icofont-simple-right ml-2  "></i></button>
+
+              </div>
+            </form>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <script>
+    $(document).ready(function(){
+        $("#department").change(function(){
+            var department_id = $(this).val();
+    
+            $.ajax({
+                url: "{% url 'get_doctors' %}",
+                type: "GET",
+                data: {'department_id': department_id},
+                success: function(response){
+                    $("#doctor").empty();
+                    $("#doctor").append('<option selected disabled>Select Doctor</option>');
+                    $.each(response.doctors, function(index, doctor){
+                        $("#doctor").append('<option value="'+doctor.id+'">'+doctor.name+'</option>');
+                    });
+                }
+            });
+        });
+    });
+    </script>
+
+
+{% endblock %}
