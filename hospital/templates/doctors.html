@@ -1,0 +1,135 @@
+{% extends "master.html" %}
+{% load static %}  
+{% block title %}Doctors{% endblock %}
+{% block content %}
+{% include "navbar.html" %}
+
+<section class="serv position-relative d-flex" style="min-height: 80vh; overflow: hidden;">
+  <img src="{% static 'images/banner.jpg' %}" alt="Background Image" class="img-fluid position-absolute top-0 start-0 w-100 h-100" style="object-fit: cover; z-index: -1;">
+  <div class="container mt-5">
+      <div class="row">
+          <div class="col-lg-7">
+              <div class="cta-content">
+                  <h1 class="mb-5 text-lg">
+                      We are pleased to offer you the 
+                      <span class="text-primary">chance to have the healthy</span>
+                  </h1>
+                  <a href="{% url 'book_appoinment' %}" class="btn btn-danger rounded-pill text-uppercase p-3 btn-sm">
+                      Get appointment <i class="icofont-simple-right ml-2"></i>
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<section class="doctors mt-5">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-lg-6 text-center">
+              <h2>Doctors</h2>
+              <p>We provide a wide range of medical specialists to ensure your health.</p>
+          </div>
+      </div>
+
+      <div class="btn-group d-flex flex-wrap justify-content-center mb-5" role="group" id="filter-buttons">
+          <button type="button" class="btn active" data-filter="all">All</button>
+          <button type="button" class="btn" data-filter="cat1">Cardiology</button>
+          <button type="button" class="btn" data-filter="cat2">Dental</button>
+          <button type="button" class="btn" data-filter="cat3">Pediatric</button>
+          <button type="button" class="btn" data-filter="cat4">Pulmonology</button>
+          <button type="button" class="btn" data-filter="cat5">Gynecology</button>
+          <button type="button" class="btn" data-filter="cat6">Ophthalmology</button>
+      </div>
+
+      <div class="row" id="doctor-list">
+          <div class="col-lg-3 col-sm-6 mb-4 doctor-item cat1">
+              <div class="card shadow-sm">
+                  <img src="{% static 'images/1.jpg' %}" class="card-img-top" alt="Doctor">
+                  <div class="card-body text-center">
+                      <h5 class="card-title">Thomas Henry</h5>
+                      <p class="text-muted">Cardiology</p>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 mb-4 doctor-item cat2">
+              <div class="card shadow-sm">
+                  <img src="{% static 'images/2.jpg' %}" class="card-img-top" alt="Doctor">
+                  <div class="card-body text-center">
+                      <h5 class="card-title">Harrison Samuel</h5>
+                      <p class="text-muted">Radiology</p>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-3 col-sm-6 mb-4 doctor-item cat3">
+              <div class="card shadow-sm">
+                  <img src="{% static 'images/3.jpg' %}" class="card-img-top" alt="Doctor">
+                  <div class="card-body text-center">
+                      <h5 class="card-title">Alexandar James</h5>
+                      <p class="text-muted">Dental</p>
+                  </div>
+              </div>
+          </div><div class="col-lg-3 col-sm-6 mb-4 doctor-item cat3">
+            <div class="card shadow-sm">
+                <img src="{% static 'images/3.jpg' %}" class="card-img-top" alt="Doctor">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Alexandar James</h5>
+                    <p class="text-muted">Dental</p>
+                </div>
+            </div>
+        </div><div class="col-lg-3 col-sm-6 mb-4 doctor-item cat3">
+          <div class="card shadow-sm">
+              <img src="{% static 'images/3.jpg' %}" class="card-img-top" alt="Doctor">
+              <div class="card-body text-center">
+                  <h5 class="card-title">Alexandar James</h5>
+                  <p class="text-muted">Dental</p>
+              </div>
+          </div>
+      </div><div class="col-lg-3 col-sm-6 mb-4 doctor-item cat3">
+        <div class="card shadow-sm">
+            <img src="{% static 'images/3.jpg' %}" class="card-img-top" alt="Doctor">
+            <div class="card-body text-center">
+                <h5 class="card-title">Alexandar James</h5>
+                <p class="text-muted">Dental</p>
+            </div>
+        </div>
+    </div>
+          <div class="col-lg-3 col-sm-6 mb-4 doctor-item cat4">
+              <div class="card shadow-sm">
+                  <img src="{% static 'images/4.jpg' %}" class="card-img-top" alt="Doctor">
+                  <div class="card-body text-center">
+                      <h5 class="card-title">Edward John</h5>
+                      <p class="text-muted">Pediatrics</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const buttons = document.querySelectorAll("#filter-buttons button");
+      const doctors = document.querySelectorAll(".doctor-item");
+
+      buttons.forEach(button => {
+          button.addEventListener("click", function () {
+              buttons.forEach(btn => btn.classList.remove("active"));
+              this.classList.add("active");
+              
+
+              const filter = this.getAttribute("data-filter");
+              doctors.forEach(doctor => {
+                  if (filter === "all" || doctor.classList.contains(filter)) {
+                      doctor.style.display = "block";
+                  } else {
+                      doctor.style.display = "none";
+                  }
+              });
+          });
+      });
+  });
+</script>
+
+{% include "footer.html" %}
+{% endblock %}

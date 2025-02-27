@@ -72,3 +72,15 @@ def token(request, token_id):
 
 def services(request):
     return render(request, 'services.html')
+
+def department(request):
+    return render(request, 'departments.html')
+
+def doctors(request):
+    return render(request, 'doctors.html')
+
+def contacts(request):
+    return render(request, 'contacts.html')
+
+def about(request):
+    return render(request, 'about.html')

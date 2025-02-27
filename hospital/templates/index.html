@@ -10,7 +10,7 @@ Home
   <section class="banner">
     <div class="container">
       <div class="row">
-        <div class="col-12">
+        <div class="col-lg-7">
           <div class="block">
             <div class="divider mb-3 mt-5"></div>
             <span class="text-uppercase text-sm letter-spacing b-txt">
@@ -20,7 +20,7 @@ Home
             <p class="mb-4 pr-5 b-txt">A repudiandae ipsam labore ipsa voluptatum quidem quae laudantium quisquam
               aperiam maiores sunt fugit, deserunt rem suscipit placeat.</p>
             <div class="btn-container">
-              <a href="appoinment" class="btn btn-apmt text-uppercase btn-danger btn-lg rounded-pill">
+              <a href="{% url 'book_appoinment' %}" class="btn btn-apmt text-uppercase btn-danger btn-lg rounded-pill">
                 Make Appointment
                 <i class="fa fa-angle-right p-2"></i>
               </a>
@@ -43,7 +43,7 @@ Home
             <h4>Online Appointment</h4>
             <p class="mb-4 flex-grow-1">Get all-time support for emergencies. We have introduced the principle of family
               medicine.</p>
-            <a href="appoinment" class="btn btn-danger text-uppercase  rounded-pill mt-auto">Make Appointment</a>
+            <a href="{% url 'appoinment' %}" class="btn btn-danger text-uppercase  rounded-pill mt-auto">Make Appointment</a>
           </div>
         </div>
         <div class="col-12 col-md-4 mb-3">
@@ -89,11 +89,11 @@ Home
           <img src="static/images/img-3.jpg " class="img-fluid mt-5" alt="">
         </div>
         <div class="col-md-4 service-box  p-5">
-          <h1>Personal care& healthy living</h1>
+          <h1>Personal care & healthy living</h1>
           <p>We provide best leading medicle service Nulla perferendis veniam deleniti ipsum officia dolores repellat
             laudantium obcaecati neque.</p>
           <div class="service-btn">
-            <a href="#" class="btn btn-danger rounded-pill">
+            <a href="{% url 'services' %}" class="btn btn-danger rounded-pill text-uppercase">
               Services
               <i class="fa fa-angle-right p-2"></i>
             </a>
@@ -126,14 +126,10 @@ Home
             <i class="icofont-globe"></i>
             <div class="">
               <span class="count" data-val="20">20</span><br><span>Worldwide Branch</span></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
   </section>
 
@@ -323,7 +319,7 @@ Home
       </div>
     </div>
     <div class="container">
-      <div class="row">
+      <div class="row d-flex align-items-center  justify-content-center">
         <div class="col-3 col-md-3">
           <img src="static/images/1.png" class="img-fluid mt-5" alt="">
         </div>
