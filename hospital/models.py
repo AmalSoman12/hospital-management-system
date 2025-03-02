@@ -11,9 +11,10 @@ class Department(models.Model):
 class Doctors(models.Model):
     name = models.CharField(max_length=100)
     department = models.ForeignKey(Department,on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to='doc_images')
 
     def __str__(self):
-        return f"{self.name} ({self.department})"
+        return f"{self.name} "
     
 class Appoinment(models.Model):
     STATUS_CHOICES = [

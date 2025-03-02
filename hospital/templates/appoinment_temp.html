@@ -71,26 +71,38 @@ Appoinment
     </div>
   </section>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    $(document).ready(function(){
-        $("#department").change(function(){
-            var department_id = $(this).val();
-    
-            $.ajax({
-                url: "{% url 'get_doctors' %}",
-                type: "GET",
-                data: {'department_id': department_id},
-                success: function(response){
-                    $("#doctor").empty();
-                    $("#doctor").append('<option selected disabled>Select Doctor</option>');
-                    $.each(response.doctors, function(index, doctor){
-                        $("#doctor").append('<option value="'+doctor.id+'">'+doctor.name+'</option>');
-                    });
-                }
-            });
-        });
-    });
-    </script>
+      $(document).ready(function () {
+          $("#department").change(function () {
+              var department_id = $(this).val();
+              
+              if (department_id) {
+                  $.ajax({
+                      url: "{% url 'get_doctors' %}",
+                      type: "GET",
+                      data: {'department_id': department_id},
+                      dataType: "json",
+                      success: function (response) {
+                          $("#doctor").empty().append('<option selected disabled>Select Doctor</option>');
+                          
+                          if (response.doctors.length > 0) {
+                              $.each(response.doctors, function (index, doctor) {
+                                  $("#doctor").append('<option value="' + doctor.id + '">' + doctor.name + '</option>');
+                              });
+                          } else {
+                              $("#doctor").append('<option disabled>No doctors available</option>');
+                          }
+                      },
+                      error: function () {
+                          alert("Failed to fetch doctors. Please try again.");
+                      }
+                  });
+              }
+          });
+      });
+  </script>
+  
 
 
 {% endblock %}

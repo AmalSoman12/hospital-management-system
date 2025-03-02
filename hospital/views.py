@@ -1,6 +1,14 @@
 from django.shortcuts import render, redirect ,get_object_or_404
 from .models import Department, Doctors, Appoinment
 from django.http import JsonResponse
+
+def login(request):
+    return render(request, 'login.html')
+
+def signup(request):
+    return render(request, 'signup.html')
+
+
 def index(request):
     departments = Department.objects.all()
     doctors = Doctors.objects.all()
@@ -77,10 +85,12 @@ def department(request):
     return render(request, 'departments.html')
 
 def doctors(request):
-    return render(request, 'doctors.html')
+    doc = Doctors.objects.all()
+    return render(request, 'doctors.html',{'doc':doc})
 
 def contacts(request):
     return render(request, 'contacts.html')
 
 def about(request):
     return render(request, 'about.html')
+
