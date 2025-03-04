@@ -15,8 +15,9 @@ urlpatterns = [
     path('doctors/',views.doctors, name='doctors'),
     path('contacts/',views.contacts, name='contacts'),
     path('about/',views.about, name='about'),
-    path('login/',views.login, name='login'),
-    path('signup/',views.signup, name='signup'),
+    path('login/',views.login_user, name='login_user'),
+    path('signup/',views.signup_user, name='signup_user'),
+    path('logout/',views.logout_user, name='logout_user'),
 ]
 
 if settings.DEBUG:

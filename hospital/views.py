@@ -1,12 +1,51 @@
 from django.shortcuts import render, redirect ,get_object_or_404
 from .models import Department, Doctors, Appoinment
 from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
 
-def login(request):
+
+
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        print(username, password)
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.info(request, 'Invalid credentials')
+            return render(request, 'login.html')
     return render(request, 'login.html')
 
-def signup(request):
+def signup_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = User.objects.filter(username=username)
+
+        if user.exists():
+            messages.info(request, 'Username is already taken')
+            return render(request, 'signup.html')
+        
+        user = User.objects.create_user(username=username, email=email, password=password)
+        user.set_password(password)
+        user.save()
+
+        messages.info(request, 'Account created successfully')
+
+        return redirect('login')
     return render(request, 'signup.html')
+
+def logout_user(request):
+    logout(request)
+    return render(request, 'login.html')
 
 
 def index(request):
@@ -16,7 +55,7 @@ def index(request):
         'departments': departments,
         'doctors': doctors
     })  
-
+@login_required
 def book_appoinment(request):
     departments = Department.objects.all()
     doctors = Doctors.objects.all()
@@ -24,7 +63,7 @@ def book_appoinment(request):
         'departments': departments,
         'doctors': doctors
     })
-
+@login_required
 def appoinment(request):
     departments = Department.objects.all()
     doctors = Doctors.objects.all()
