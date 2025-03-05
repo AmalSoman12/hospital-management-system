@@ -1,0 +1,24 @@
+{% extends "master.html" %}
+{% load static %}
+{% block title %}
+Admin Dashboard | Novena
+{% endblock %}
+{% block content %}
+<div class="sidebar ">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <img src="{% static 'images/logo.png' %}" alt="logo" class="w-75 img-fluid">
+        <hr>
+        <a class="" href="{% url 'user_list' %}"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Users</a>
+        <a href="{% url 'appoinment_list' %}"><i class="fa fa-book" aria-hidden="true"></i> Appointment</a>
+        <a href="{% url 'department_list' %}"><i class="fa fa-hospital-o" aria-hidden="true"></i> Department</a>
+        <a href="{% url 'doctors_list' %}"><i class="fa fa-user-md" aria-hidden="true"></i> Doctors</a>
+        <a href="{% url 'logout_admin' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

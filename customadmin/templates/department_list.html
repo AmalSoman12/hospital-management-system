@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+{% load static %}
+{% block title %}
+Doctors Dashboard | Novena
+{% endblock %}
+{% block content %}
+{% include 'sidebar.html' %}
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-2"></div>
+
+            <div class="col-lg-10">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Department</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for x in departments %}
+                      <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{x.name}}</td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                  </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
