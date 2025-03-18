@@ -49,9 +49,13 @@ def department_list(request):
     return render(request, 'department_list.html',context)
 
 def appoinment_list(request):
+    departments = Department.objects.all()
+    doctors = Doctors.objects.all()
     appoinments = Appoinment.objects.all()
     context = {
-        'appoinments': appoinments
+        'appoinments': appoinments,
+        'departments': departments,
+        'doctors': doctors
     }   
     return render(request, 'appoinment_list.html',context)
 

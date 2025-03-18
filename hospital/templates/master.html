@@ -71,7 +71,7 @@
     }
 
     .banner {
-      background-image: url('static/images/slider-bg-1.jpg');
+      background-image: url('hospital/static/images/slider-bg-1.jpg');
       background-size: cover;
       height: 100vh;
       width: 100%;
@@ -152,7 +152,7 @@
     .counter {
 
       position: relative;
-      background-image: url("static/images/bg-4.jpg") no-repeat 50% 50%;
+      background-image: url("hospital/static/images/bg-4.jpg") no-repeat 50% 50%;
       background-size: cover;
       background-color: rgba(34, 58, 102, 0.95);
       background-blend-mode: multiply;
@@ -213,7 +213,7 @@
       left: 0px;
       position: absolute;
       content: "";
-      background: url("static/images/bg-2.jpg") no-repeat 50% 50%;
+      background: url("hospital/static/images/bg-2.jpg") no-repeat 50% 50%;
     }
 
     .testimonial .slick-dots {
@@ -367,7 +367,7 @@
 
     .appoinment-banner {
       position: relative;
-      background-image: url("static/images/22.jpg");
+      background-image: url("hospital/static/images/22.jpg");
       background-size: cover;
       background-color: rgb(84, 103, 244);
       background-blend-mode: multiply;
@@ -492,70 +492,153 @@
       background-color: rgb(3, 45, 83);
 
     }
-
     .sidebar {
-      margin: 0;
-      padding: 0;
-      width: 200px;
-      background-color: #fff;
+      height: 100vh;
+      width: 250px;
       position: fixed;
-      height: 100%;
-      overflow: auto;
+      top: 0;
+      left: 0;
+      background-color: #fff;
+      padding-top: 20px;
+      transition: width 0.3s ease;
+      overflow-x: hidden;
     }
-
-    /* Sidebar links */
-    .sidebar a {
-      display: block;
+    .sidebar.collapsed {
+      width: 70px;
+    }
+    .sidebar .logo {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 24px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .sidebar.collapsed .logo {
+      font-size: 18px;
+    }
+    .sidebar .nav-link {
       color: black;
-      padding: 16px;
-      text-decoration: none;
+      font-weight: 700;
+      padding: 10px 20px;
+      margin: 5px 0;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      overflow: hidden;
     }
-
-    /* Active/current link */
-
-
-    /* Links on mouse-over */
-    .sidebar a:hover:not(.active) {
+    .sidebar .nav-link:hover {
       background-color: #dc3545;
-      color: white;
+      color: #fff;
     }
-
-    /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
-    div.content {
-      margin-left: 200px;
-      padding: 1px 16px;
-      height: 1000px;
+    .sidebar .nav-link i {
+      margin-right: 10px;
+      font-size: 20px;
     }
-
-    /* On screens that are less than 700px wide, make the sidebar into a topbar */
-    @media screen and (max-width: 700px) {
+    .sidebar.collapsed .nav-link span {
+      display: none;
+    }
+    .sidebar .dropdown-menu {
+      background-color: #343a40;
+      border: none;
+    }
+    .sidebar .dropdown-item {
+      color: #fff;
+    }
+    .sidebar .dropdown-item:hover {
+      background-color: #495057;
+    }
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+      transition: margin-left 0.3s ease;
+    }
+    .sidebar.collapsed + .content {
+      margin-left: 70px;
+    }
+    /* Toggle button styling */
+    .sidebar-toggle {
+      top: 10px;
+      left: 260px; /* Position outside the sidebar */
+      z-index: 1000;
+      background-color: #343a40;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: left 0.3s ease;
+    }
+    .sidebar.collapsed + .content .sidebar-toggle {
+      left: 80px; /* Adjust position when sidebar is collapsed */
+    }
+    /* Hide toggle button on small screens */
+    @media (max-width: 768px) {
       .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
+        width: 70px;
       }
-
-      .sidebar a {
-        float: left;
+      .sidebar .logo {
+        font-size: 18px;
       }
-
-      div.content {
-        margin-left: 0;
+      .sidebar .nav-link span {
+        display: none;
       }
-    }
-
-    /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-    @media screen and (max-width: 400px) {
-      .sidebar a {
-        text-align: center;
-        float: none;
+      .content {
+        margin-left: 70px;
+      }
+      .sidebar-toggle {
+        display: none; /* Hide toggle button on small screens */
       }
     }
-
+    
+    .new-btn{
+    
+      float: right;
+    }
   
   </style>
 </head>
+<script>
+  function toggleSidebar() {
+     const sidebar = document.getElementById("sidebar");
+     sidebar.classList.toggle("collapsed");
 
+     const content = document.getElementById("content");
+     if (sidebar.classList.contains("collapsed")) {
+       content.style.marginLeft = "70px";
+     } else {
+       content.style.marginLeft = "250px";
+     }
+   }
+
+   // Automatically collapse sidebar on small screens
+   window.addEventListener("resize", () => {
+     const sidebar = document.getElementById("sidebar");
+     const content = document.getElementById("content");
+     if (window.innerWidth <= 768) {
+       sidebar.classList.add("collapsed");
+       content.style.marginLeft = "70px";
+     } else {
+       sidebar.classList.remove("collapsed");
+       content.style.marginLeft = "250px";
+     }
+   });
+
+   // Initialize sidebar state on page load
+   window.addEventListener("load", () => {
+     const sidebar = document.getElementById("sidebar");
+     const content = document.getElementById("content");
+     if (window.innerWidth <= 768) {
+       sidebar.classList.add("collapsed");
+       content.style.marginLeft = "70px";
+     } else {
+       sidebar.classList.remove("collapsed");
+       content.style.marginLeft = "250px";
+     }
+   });
+</script>
 <body>
   {% block content%}
   {% endblock %}

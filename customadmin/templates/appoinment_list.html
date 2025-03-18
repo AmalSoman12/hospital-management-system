@@ -4,44 +4,128 @@
 Doctors Dashboard | Novena
 {% endblock %}
 {% block content %}
-{% include 'sidebar.html' %}
-    <div class="container">
-        <div class="row">
-          <div class="col-lg-2"></div>
 
-            <div class="col-lg-10">
-                <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">id</th>
-                        <th>Token no</th>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Doctor</th>
-                        <th>Date</th>
-                        <th>phone</th>
-                        <th>Message</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        {% for x in appoinments %}
-                      <tr>
-                        <th scope="row">{{forloop.counter}}</th>
-                        <td>{{x.token_number}}</td>
-                        <td>{{x.first_name}} {{x.lastname}} </td>
-                        <td>{{x.department}}</td>
-                        <td>{{x.doctor}}</td>
-                        <td>{{x.date}}</td>
-                        <td>{{x.phone}}</td>
-                        <td>{{x.message}}</td>
-                        <td>{{x.status}}</td>
-                      </tr>
-                    </tbody>
-                    {% endfor %}
-                  </table>
+{% include 'sidebar.html' %}
+<div class="section">
+  
+</div>
+<div class="content" id="content">
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <button type="button" class="btn rounded-pill bg-danger text-white new-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">Add New +</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class=" modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Appointment</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="First Name" aria-label="First Name" aria-describedby="basic-addon1">
             </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <select class="form-control" id="department" name="department" required>
+                <option selected disabled>Choose Department</option>
+                {% for dep in departments %}
+                <option value="{{ dep.id }}">{{ dep.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="input-group mb-3">
+              <select class="form-control" id="doctor" name="doctor" required>
+                <option selected disabled>Select Doctor</option>
+            </select> 
+            </div>
+            <div class="input-group mb-3">
+              <input type="date" class="form-control" placeholder="Date" aria-label="Date" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Message" aria-label="Message" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Phone" aria-label="Phone" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Status" aria-label="Status" aria-describedby="basic-addon1">
+            </div>
+            
+          
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
         </div>
+      </div>
     </div>
+    <table class="table mt-5  ">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Token No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Department</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Date</th>
+            <th scope="col">Message</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Status</th> 
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for x in appoinments %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td scope="row">{{x.token_number}}</td>
+            <td scope="row">{{x.first_name}} {{x.last_name}}</td>
+            <td scope="row">{{x.department}}</td>
+            <td scope="row">{{x.doctor}}</td>
+            <td scope="row">{{x.date}}</td>
+            <td scope="row">{{x.message}}</td>
+            <td scope="row">{{x.phone}}</td>
+            <td scope="row">{{x.status}}</td>
+            <td><i class="fa fa-pencil" aria-hidden="true"></i>
+            <i class="fa fa-trash-o" aria-hidden="true"></i></td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+      $(document).ready(function () {
+          $("#department").change(function () {
+              var department_id = $(this).val();
+              
+              if (department_id) {
+                  $.ajax({
+                      url: "{% url 'get_doctors' %}",
+                      type: "GET",
+                      data: {'department_id': department_id},
+                      dataType: "json",
+                      success: function (response) {
+                          $("#doctor").empty().append('<option selected disabled>Select Doctor</option>');
+                          
+                          if (response.doctors.length > 0) {
+                              $.each(response.doctors, function (index, doctor) {
+                                  $("#doctor").append('<option value="' + doctor.id + '">' + doctor.name + '</option>');
+                              });
+                          } else {
+                              $("#doctor").append('<option disabled>No doctors available</option>');
+                          }
+                      },
+                      error: function () {
+                          alert("Failed to fetch doctors. Please try again.");
+                      }
+                  });
+              }
+          });
+      });
+  </script>
 
 {% endblock %}
